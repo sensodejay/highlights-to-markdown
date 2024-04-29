@@ -161,6 +161,7 @@ async function createQuoteFromLine(line) {
   // get quote as HTML from "fragment" and convert it to Markdown
   const quote = turndownService.turndown(line.fragment)
   const note = parseSymbols(line.text)
+  const blockref = '^ref-' + line.identifier.slice(0, 8)
   const getQuote = () => {
     if (!!note) {
       return `${quote} | ==${note}==`
@@ -170,7 +171,7 @@ async function createQuoteFromLine(line) {
   return {
     chapter: chapterTitle,
     date,
-    quote: `${getQuote()} | [${date}](${url})`,
+    quote: `${getQuote()} | [${date}](${url})  ${blockref}`,
   }
 }
 
